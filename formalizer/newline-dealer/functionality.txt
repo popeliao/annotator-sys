@@ -1,0 +1,5 @@
+1 converse all EOL
+2 delete all trailing and leading blank
+3 remove unnecessary blank and EOL
+
+4 <>'___'<> : ___ needed to be deleted
