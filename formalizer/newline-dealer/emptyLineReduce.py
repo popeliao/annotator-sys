@@ -11,9 +11,9 @@ def main(argv):
 
 	p = re.compile(r'\n\n+')
 	s = p.sub('\n',s)
-	
+
 	fout = open(argv[2],"w")
-	s = EOLdealer(s)
+	fout.write(s)
 	fout.close()
 
 
