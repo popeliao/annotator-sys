@@ -1,16 +1,17 @@
-#converse all EOL to Unix Format
+#reduce all the empty lines
 import os
 import sys
+import re
 
-def EOLdealer(st):
-        tmp = st.replace('\r\n','\n')
-	fout.write(tmp.replace('\r','\n'))
 
 def main(argv):
 	f = open(argv[1],"rb")
 	s = f.read()
 	f.close()
 
+	p = re.compile(r'\n\n+')
+	s = p.sub('\n',s)
+	
 	fout = open(argv[2],"w")
 	s = EOLdealer(s)
 	fout.close()
