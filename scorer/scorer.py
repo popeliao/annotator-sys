@@ -4,6 +4,14 @@ f2 = open("150_200_a_p.txt","r")     #t2 is key
 #f1 = open("t1.txt","r")     #t1 is response
 #f2 = open("t2.txt","r")     #t2 is key
 
+#stat info
+#true postive, false postive, true negative, false negative
+tp=0
+fp=0
+tn=0
+fn=0
+
+
 COR = 0
 INC = 1
 PAR = 2
@@ -99,7 +107,7 @@ def init():
     
 
 
-def printStat():
+def printStat():#obsolete
     fRecord.write("\nStat for LOCATION\n")
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("COR",ansLOC[COR][COR],ansLOC[COR][INC],ansLOC[COR][PAR],ansLOC[COR][MIS],ansLOC[COR][SUP]))
@@ -110,7 +118,7 @@ def printStat():
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("PER",ansNER["PERSON"][COR],ansNER["PERSON"][INC],ansNER["PERSON"][PAR],ansNER["PERSON"][MIS],ansNER["PERSON"][SUP]))
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("ORG",ansNER["ORGANIZATION"][COR],ansNER["ORGANIZATION"][INC],ansNER["ORGANIZATION"][PAR],ansNER["ORGANIZATION"][MIS],ansNER["ORGANIZATION"][SUP]))
 
-def sumRecord():
+def sumRecord(): #obsolete
 #sum up the value to the summary
     sumAnsLOC[COR][COR] = sumAnsLOC[COR][COR] + ansLOC[COR][COR]
     sumAnsLOC[COR][INC] = sumAnsLOC[COR][INC] + ansLOC[COR][INC]
@@ -136,6 +144,18 @@ def sumRecord():
     sumAnsNER["ORGANIZATION"][MIS] = sumAnsNER["ORGANIZATION"][MIS] + ansNER["ORGANIZATION"][MIS]
     sumAnsNER["ORGANIZATION"][SUP] = sumAnsNER["ORGANIZATION"][SUP] + ansNER["ORGANIZATION"][SUP]
 
+def recordStat(ACT, typeFlag):
+    #dynamically change the global value tp,tn,fp,fn based on record 
+    #ACT(postion) and typeFlag(type), see about_measure for reference
+    global tp,tn,fp,fn
+    #strictly matching for postion, don't care type  
+    if ACT == MIS:
+        fn += 1
+    elif ACT == COR:
+        tp += 1
+    else:
+        fp += 1
+
 def record(ACT, p, q):
     #record each item and make the stat data for each doc
     if (ACT <> MIS and ACT <> SUP):
@@ -160,32 +180,33 @@ def record(ACT, p, q):
         fRecord.write("%10s%5s%50s%50s" %("SUP", typeFlag, strRecorder1[p], ""))
     
     fRecord.write("\n")
+    recordStat(ACT, typeFlag)
 
+
+
+    ############################OLD CODE
     #make stat for LOC
-    if (ACT <> MIS and ACT <> SUP):
-        if (NERtype2[q]=="LOCATION" and NERtype1[p] == NERtype2[q]): #******
-            ansLOC[COR][ACT] = ansLOC[COR][ACT] + 1
-        elif (NERtype2[q]=="LOCATION" and NERtype1[p] <> NERtype2[q]): #*****
-            ansLOC[INC][ACT] = ansLOC[INC][ACT] + 1
-    else:
-        if (ACT == MIS):
-            if (NERtype2[q]=="LOCATION"):
-                ansLOC[COR][MIS] = ansLOC[COR][MIS] + 1                        
-        if (ACT == SUP):
-            if (NERtype1[p]=="LOCATION"):
-                ansLOC[COR][SUP] = ansLOC[COR][SUP] + 1            
+    #if (ACT <> MIS and ACT <> SUP):
+    #    if (NERtype2[q]=="LOCATION" and NERtype1[p] == NERtype2[q]): #******
+    #        ansLOC[COR][ACT] = ansLOC[COR][ACT] + 1
+    #    elif (NERtype2[q]=="LOCATION" and NERtype1[p] <> NERtype2[q]): #*****
+    #        ansLOC[INC][ACT] = ansLOC[INC][ACT] + 1
+    #else:
+    #    if (ACT == MIS):
+    #        if (NERtype2[q]=="LOCATION"):
+    #            ansLOC[COR][MIS] = ansLOC[COR][MIS] + 1                        
+    #    if (ACT == SUP):
+    #        if (NERtype1[p]=="LOCATION"):
+    #            ansLOC[COR][SUP] = ansLOC[COR][SUP] + 1            
 
     #make stat for all NE, i.e. those LOC tagged as other NE
-    if (ACT <> MIS and ACT <> SUP):
-        if (p < len (NERtype1) and q < len (NERtype2) and NERtype2[q]=="LOCATION" and NERtype1[p]<>"LOCATION"): #*****
-            ansNER[NERtype1[p]][ACT] = ansNER[NERtype1[p]][ACT] + 1            
+    #if (ACT <> MIS and ACT <> SUP):
+    #    if (p < len (NERtype1) and q < len (NERtype2) and NERtype2[q]=="LOCATION" and NERtype1[p]<>"LOCATION"): #*****
+    #        ansNER[NERtype1[p]][ACT] = ansNER[NERtype1[p]][ACT] + 1            
 
 def compare():
     p = 0
     q = 0
-    #print pos1
-    #print pos2
-    #print len(pos1),len(pos2),"****"
     while (p < len(pos1) and q < len(pos2)) :
         if (pos1[p][1] < pos2[q][0]):
             #if (NERtype1[p] == "LOCATION"):
@@ -270,7 +291,7 @@ def extractDoc(s, pos, NERtype, strRecorder):
     #if (docNum == 1 or docNum == 2):
     #print pos, NERtype, strRecorder
 
-def printSum():
+def printSum():# obsolete
     
     fRecord.write("\n\n\n***************************\nStat for all doc\n**************************\n")
     fRecord.write("\nStat for LOCATION\n")
@@ -282,6 +303,23 @@ def printSum():
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("PER",sumAnsNER["PERSON"][COR],sumAnsNER["PERSON"][INC],sumAnsNER["PERSON"][PAR],sumAnsNER["PERSON"][MIS],sumAnsNER["PERSON"][SUP]))
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("ORG",sumAnsNER["ORGANIZATION"][COR],sumAnsNER["ORGANIZATION"][INC],sumAnsNER["ORGANIZATION"][PAR],sumAnsNER["ORGANIZATION"][MIS],sumAnsNER["ORGANIZATION"][SUP]))
+
+
+
+def printAllStat():
+    #print all measure stat data based tp,tn,fp,fn
+    global tp,tn,fp,fn
+    pr = tp/float(tp+fp)
+    re = tp/float(tp+fn)
+    F = 2*pr*re/float(pr+re)
+    fRecord.write("\n\n\n***************************\nStat for all doc\n**************************\n")
+    fRecord.write("%10s %5f\n" %("precision:",pr))
+    fRecord.write("%10s %5f\n" %("recall:",re))
+    fRecord.write("%10s %5f\n" %("F-measure:",F))
+    
+    
+   
+
 
 def dealDocly():
     c1 = f1.readline()
@@ -311,9 +349,13 @@ def dealDocly():
         init()
         extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
         extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key
-        compare()
-        printStat()       
-        sumRecord()    
+        compare()   #in compare func, we does 3 things
+                    #1 we record all the details 
+                    #2 we print all the details
+                    #3 we make stat data based on the details
+
+        #printStat()       
+        #sumRecord()    
 
         c1 = f1.readline()
         c2 = f2.readline()   
@@ -321,7 +363,8 @@ def dealDocly():
 #############main##################
 
 dealDocly()
-printSum()
+#printSum()
+printAllStat()
 
 f1.close()
 f2.close()

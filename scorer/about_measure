@@ -1,0 +1,5 @@
+Matching criteria for measuring tp,fp,tn,fn
+			
+type		= care, 	don't care 
+position	= exact, 	any overlap OK
+
