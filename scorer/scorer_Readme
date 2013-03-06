@@ -1,0 +1,54 @@
+DOC for scorer.py
+
+****************************************************
+Describtion:
+The program takes 50t1.txt(response) and 50t2.txt(key) as input.
+And output a file named "result.txt" that contains detailed summary for NER comparison.   Response and Key file are in the form of "<doc> <LOCATION> <ORGANIZATION> <PERSON> </doc>". And the LOCATION is of the most important that we concern. 
+
+At the end of the "result.txt", there is a summary for all the docs in response.
+
+***************************************************
+Auxilary: 
+a.awk is a helper script program that transform key into acceptable form and check its consistency.
+
+****************************************************
+Design Core
+The core of scorer.py is how to align two files with annotation in different position but actually match the same content in the original file. 
+
+Five possible situation for postion are introduced:
+    COR : totally correct
+    INC : incorrect but has intersection part
+    PAR : the response is part of the key
+    SUP : the response is superfluous 
+    MIS : some key has no response associated with them
+Two situations for type are introduced:
+    COR & INC
+
+Alignment algo:
+1 EXTRACT part
+First make lists P,Q for both response and key file s.t. (implemented as extractDoc func, this func extracts a list from a single <doc>)
+P[i][0]-P[i][1] represents the arrangement of ith annotation in a <doc> in response file. And the arrangement is counted based on char.
+
+2 COMPARE part
+In this part, we need to produce result based on two extracted list P,Q. The program applies p,q pointer to iterate through P,Q.
+p = q = 0
+(naturally p1<p2 and q1<q2)
+switch 
+    case p2 < q1 : SUP; NEXT P
+    case p2 < q2 : 
+        case p1 < q1: INC;
+        case p1 >= q1:PAR;
+        NEXT P
+    case p2 = q2:
+        case p1 < q1: INC;
+        case p1 = q1: COR;
+        case p1 > q1: PAR;
+        NEXT P; NEXT Q
+    case p2 > q2
+        case p1 <= q2: INC; 
+        case p1 > q2: MIS;
+        NEXT Q
+end
+
+
+

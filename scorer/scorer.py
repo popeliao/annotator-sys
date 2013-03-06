@@ -1,6 +1,6 @@
 fRecord = open("result.txt","w")
-f1 = open("50t1.txt","r")     #t1 is response
-f2 = open("50t2.txt","r")     #t2 is key
+f1 = open("150_200_a_a.txt","r")     #t1 is response
+f2 = open("150_200_a_p.txt","r")     #t2 is key
 #f1 = open("t1.txt","r")     #t1 is response
 #f2 = open("t2.txt","r")     #t2 is key
 
@@ -17,7 +17,7 @@ pos2 = []
 NERtype2 = []
 strRecorder2 = []
 
-#store stat data
+#store stat data for each doc
 ansLOC = {}
 ansLOC[COR] = {}
 ansLOC[INC] = {}
@@ -27,6 +27,39 @@ ansNER["PERSON"] = {}
 ansNER["ORGANIZATION"] = {}
 
 docNum = 0
+#store stat data for the whole
+sumAnsLOC = {}
+sumAnsLOC[COR] = {}
+sumAnsLOC[INC] = {}
+
+sumAnsNER = {}
+sumAnsNER["PERSON"] = {}
+sumAnsNER["ORGANIZATION"] = {}
+
+#init for the summary stat data
+sumAnsLOC[COR][COR] = 0
+sumAnsLOC[COR][INC] = 0
+sumAnsLOC[COR][PAR] = 0
+sumAnsLOC[COR][MIS] = 0
+sumAnsLOC[COR][SUP] = 0
+
+sumAnsLOC[INC][COR] = 0
+sumAnsLOC[INC][INC] = 0
+sumAnsLOC[INC][PAR] = 0
+sumAnsLOC[INC][MIS] = 0
+sumAnsLOC[INC][SUP] = 0    
+
+sumAnsNER["PERSON"][COR] = 0
+sumAnsNER["PERSON"][INC] = 0
+sumAnsNER["PERSON"][PAR] = 0
+sumAnsNER["PERSON"][MIS] = 0
+sumAnsNER["PERSON"][SUP] = 0
+
+sumAnsNER["ORGANIZATION"][COR] = 0
+sumAnsNER["ORGANIZATION"][INC] = 0
+sumAnsNER["ORGANIZATION"][PAR] = 0
+sumAnsNER["ORGANIZATION"][MIS] = 0
+sumAnsNER["ORGANIZATION"][SUP] = 0
 
 def init():  
     global pos1,pos2,NERtype1,NERtype2,strRecorder1,strRecorder2
@@ -77,11 +110,36 @@ def printStat():
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("PER",ansNER["PERSON"][COR],ansNER["PERSON"][INC],ansNER["PERSON"][PAR],ansNER["PERSON"][MIS],ansNER["PERSON"][SUP]))
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("ORG",ansNER["ORGANIZATION"][COR],ansNER["ORGANIZATION"][INC],ansNER["ORGANIZATION"][PAR],ansNER["ORGANIZATION"][MIS],ansNER["ORGANIZATION"][SUP]))
 
+def sumRecord():
+#sum up the value to the summary
+    sumAnsLOC[COR][COR] = sumAnsLOC[COR][COR] + ansLOC[COR][COR]
+    sumAnsLOC[COR][INC] = sumAnsLOC[COR][INC] + ansLOC[COR][INC]
+    sumAnsLOC[COR][PAR] = sumAnsLOC[COR][PAR] + ansLOC[COR][PAR]
+    sumAnsLOC[COR][MIS] = sumAnsLOC[COR][MIS] + ansLOC[COR][MIS]
+    sumAnsLOC[COR][SUP] = sumAnsLOC[COR][SUP] + ansLOC[COR][SUP]
 
+    sumAnsLOC[INC][COR] = sumAnsLOC[INC][COR] + ansLOC[INC][COR]
+    sumAnsLOC[INC][INC] = sumAnsLOC[INC][INC] + ansLOC[INC][INC]
+    sumAnsLOC[INC][PAR] = sumAnsLOC[INC][PAR] + ansLOC[INC][PAR]
+    sumAnsLOC[INC][MIS] = sumAnsLOC[INC][MIS] + ansLOC[INC][MIS]
+    sumAnsLOC[INC][SUP] = sumAnsLOC[INC][SUP] + ansLOC[INC][SUP]
+
+    sumAnsNER["PERSON"][COR] = sumAnsNER["PERSON"][COR] + ansNER["PERSON"][COR]
+    sumAnsNER["PERSON"][INC] = sumAnsNER["PERSON"][INC] + ansNER["PERSON"][INC]
+    sumAnsNER["PERSON"][PAR] = sumAnsNER["PERSON"][PAR] + ansNER["PERSON"][PAR]
+    sumAnsNER["PERSON"][MIS] = sumAnsNER["PERSON"][MIS] + ansNER["PERSON"][MIS]
+    sumAnsNER["PERSON"][SUP] = sumAnsNER["PERSON"][SUP] + ansNER["PERSON"][SUP]
+
+    sumAnsNER["ORGANIZATION"][COR] = sumAnsNER["ORGANIZATION"][COR] + ansNER["ORGANIZATION"][COR]
+    sumAnsNER["ORGANIZATION"][INC] = sumAnsNER["ORGANIZATION"][INC] + ansNER["ORGANIZATION"][INC]
+    sumAnsNER["ORGANIZATION"][PAR] = sumAnsNER["ORGANIZATION"][PAR] + ansNER["ORGANIZATION"][PAR]
+    sumAnsNER["ORGANIZATION"][MIS] = sumAnsNER["ORGANIZATION"][MIS] + ansNER["ORGANIZATION"][MIS]
+    sumAnsNER["ORGANIZATION"][SUP] = sumAnsNER["ORGANIZATION"][SUP] + ansNER["ORGANIZATION"][SUP]
 
 def record(ACT, p, q):
+    #record each item and make the stat data for each doc
     if (ACT <> MIS and ACT <> SUP):
-        if (q < len(NERtype2) and p < len(NERtype1) and NERtype1[p] == NERtype2[q]): #***
+        if ( NERtype1[p] == NERtype2[q]): #****
             typeFlag = "COR"
         else:
             typeFlag = "INC"
@@ -91,23 +149,23 @@ def record(ACT, p, q):
         if (ACT == SUP):
             typeFlag = "SUP"
     if (ACT == COR):        
-        fRecord.write("%10s%5s%32s%32s" %("COR", typeFlag, strRecorder1[p], strRecorder2[q]))
+        fRecord.write("%10s%5s%50s%50s" %("COR", typeFlag, strRecorder1[p], strRecorder2[q]))
     elif (ACT == INC):
-        fRecord.write("%10s%5s%32s%32s" %("INC", typeFlag, strRecorder1[p], strRecorder2[q]))
+        fRecord.write("%10s%5s%50s%50s" %("INC", typeFlag, strRecorder1[p], strRecorder2[q]))
     elif (ACT == PAR):
-        fRecord.write("%10s%5s%32s%32s" %("PAR", typeFlag, strRecorder1[p], strRecorder2[q]))
+        fRecord.write("%10s%5s%50s%50s" %("PAR", typeFlag, strRecorder1[p], strRecorder2[q]))
     elif (ACT == MIS):
-        fRecord.write("%10s%5s%32s%32s" %("MIS", typeFlag, "", strRecorder2[q]))
+        fRecord.write("%10s%5s%50s%50s" %("MIS", typeFlag, "", strRecorder2[q]))
     elif (ACT == SUP):
-        fRecord.write("%10s%5s%32s%32s" %("SUP", typeFlag, strRecorder1[p], ""))
+        fRecord.write("%10s%5s%50s%50s" %("SUP", typeFlag, strRecorder1[p], ""))
     
     fRecord.write("\n")
 
     #make stat for LOC
     if (ACT <> MIS and ACT <> SUP):
-        if (NERtype2[q]=="LOCATION" and NERtype1[p] == NERtype2[q]):
+        if (NERtype2[q]=="LOCATION" and NERtype1[p] == NERtype2[q]): #******
             ansLOC[COR][ACT] = ansLOC[COR][ACT] + 1
-        elif (NERtype2[q]=="LOCATION" and NERtype1[p] <> NERtype2[q]):
+        elif (NERtype2[q]=="LOCATION" and NERtype1[p] <> NERtype2[q]): #*****
             ansLOC[INC][ACT] = ansLOC[INC][ACT] + 1
     else:
         if (ACT == MIS):
@@ -119,16 +177,19 @@ def record(ACT, p, q):
 
     #make stat for all NE, i.e. those LOC tagged as other NE
     if (ACT <> MIS and ACT <> SUP):
-        if (NERtype2[q]=="LOCATION" and NERtype1[p]<>"LOCATION"):
+        if (p < len (NERtype1) and q < len (NERtype2) and NERtype2[q]=="LOCATION" and NERtype1[p]<>"LOCATION"): #*****
             ansNER[NERtype1[p]][ACT] = ansNER[NERtype1[p]][ACT] + 1            
 
 def compare():
     p = 0
     q = 0
+    #print pos1
+    #print pos2
+    #print len(pos1),len(pos2),"****"
     while (p < len(pos1) and q < len(pos2)) :
         if (pos1[p][1] < pos2[q][0]):
-            if (NERtype1[p] == "LOCATION"):
-                record(SUP, p, q)
+            #if (NERtype1[p] == "LOCATION"):
+            record(SUP, p, q)
             p = p + 1
         elif(pos1[p][1] < pos2[q][1]):
             if (pos1[p][0] < pos2[q][0]):
@@ -152,8 +213,8 @@ def compare():
                 record(MIS, p, q)
             q = q + 1
     if (p < len(pos1)):
-        if (NERtype1[p] == "LOCATION"):
-            record(SUP, p, q)
+        #if (NERtype1[p] == "LOCATION"):
+        record(SUP, p, q)
         p = p + 1
     if (q < len(pos2)):
         record(MIS, p, q)
@@ -174,7 +235,9 @@ def extractDoc(s, pos, NERtype, strRecorder):
     inside = False   #the state to indicate inside a parent or not
     openFlag = True  #the state to indicate current parent is an open one
     while (sp < sn):            
-        #print c,i    
+        global docNum
+        #if (docNum == 1):
+	    #    print c,i    
         if (c == '<'):        
             if (openFlag):
                 pos.append([])
@@ -201,13 +264,24 @@ def extractDoc(s, pos, NERtype, strRecorder):
                 str_tmp = str_tmp + c
         else:
             if (not openFlag and c <> '>'):
-
                 NER_tmp = NER_tmp + c
     #
     #global docNum
     #if (docNum == 1 or docNum == 2):
     #print pos, NERtype, strRecorder
+
+def printSum():
     
+    fRecord.write("\n\n\n***************************\nStat for all doc\n**************************\n")
+    fRecord.write("\nStat for LOCATION\n")
+    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
+    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("COR",sumAnsLOC[COR][COR],sumAnsLOC[COR][INC],sumAnsLOC[COR][PAR],sumAnsLOC[COR][MIS],sumAnsLOC[COR][SUP]))
+    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("INC",sumAnsLOC[INC][COR],sumAnsLOC[INC][INC],sumAnsLOC[INC][PAR],"N\A","N\A"))
+    
+    fRecord.write("\nStat for LOCATION tagged as other NE\n")
+    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
+    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("PER",sumAnsNER["PERSON"][COR],sumAnsNER["PERSON"][INC],sumAnsNER["PERSON"][PAR],sumAnsNER["PERSON"][MIS],sumAnsNER["PERSON"][SUP]))
+    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("ORG",sumAnsNER["ORGANIZATION"][COR],sumAnsNER["ORGANIZATION"][INC],sumAnsNER["ORGANIZATION"][PAR],sumAnsNER["ORGANIZATION"][MIS],sumAnsNER["ORGANIZATION"][SUP]))
 
 def dealDocly():
     c1 = f1.readline()
@@ -231,16 +305,15 @@ def dealDocly():
         global docNum
         docNum = docNum + 1
         #print docNum
-        fRecord.write("----------------------------------------------------------------------------------\n")
+        fRecord.write("---------------------------------------------------------------------------------------------------------------------\n")
         fRecord.write("Summary for Doc" + str(docNum) + "\n")
-        fRecord.write("%10s%5s%32s%32s\n" %("POSITION","TYPE","RSP_TEXT","KEY_TEXT"))
+        fRecord.write("%10s%5s%50s%50s\n" %("POSITION","TYPE","RSP_TEXT","KEY_TEXT"))
         init()
-        #print s1[0:20]
         extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
         extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key
         compare()
         printStat()       
-    #   sumRecord()    
+        sumRecord()    
 
         c1 = f1.readline()
         c2 = f2.readline()   
@@ -248,7 +321,7 @@ def dealDocly():
 #############main##################
 
 dealDocly()
-#   printSum()
+printSum()
 
 f1.close()
 f2.close()
