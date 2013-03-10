@@ -1,8 +1,40 @@
+#main->type_iter 
+#     dealDocly                                ->compare                   ->printAllStat
+#    :extractDoc(pos, NERtype, strRecorder)    :record
+#                                              :recordStat (tp,fp,tn,fn)
+#
+# The adaption for each iteration one type made is in extractDoc
 fRecord = open("result.txt","w")
-f1 = open("150_200_a_a.txt","r")     #t1 is response
-f2 = open("150_200_a_p.txt","r")     #t2 is key
-#f1 = open("t1.txt","r")     #t1 is response
-#f2 = open("t2.txt","r")     #t2 is key
+
+#classes
+annotate_type = [["NE:CIT","/NE:CI"],["NE:ORG","/NE:OR"],["NE:LOC","/NE:LO"]]
+g_i = 0
+annotate_type_name = ["CITY","ORGANIZATION","LOCATION"]
+
+def type_iter():    
+    global g_i,docNum
+    for g_i in range(3):
+        docNum = 0
+        f1 = open("150_200_a_a.txt","r")     #t1 is response
+        f2 = open("150_200_a_p.txt","r")     #t2 is key
+        fRecord.write("\n\n\n***************************\nagreement result for %s\n**************************\n" %(annotate_type_name[g_i]))
+        dealDocly(f1, f2)
+        printAllStat()
+        f1.close()
+        f2.close()
+
+
+def printAllStat():
+    #print all measure stat data based tp,tn,fp,fn
+    global tp,tn,fp,fn, g_i
+    pr = tp/float(tp+fp)
+    re = tp/float(tp+fn)
+    F = 2*pr*re/float(pr+re)
+    fRecord.write("\n\n\n***************************\nStat for all doc regarding type: %s\n**************************\n" %(annotate_type_name[g_i]))
+    fRecord.write("%10s %5f\n" %("precision:",pr))
+    fRecord.write("%10s %5f\n" %("recall:",re))
+    fRecord.write("%10s %5f\n" %("F-measure:",F))
+
 
 #stat info
 #true postive, false postive, true negative, false negative
@@ -68,6 +100,8 @@ sumAnsNER["ORGANIZATION"][INC] = 0
 sumAnsNER["ORGANIZATION"][PAR] = 0
 sumAnsNER["ORGANIZATION"][MIS] = 0
 sumAnsNER["ORGANIZATION"][SUP] = 0
+
+
 
 def init():  
     global pos1,pos2,NERtype1,NERtype2,strRecorder1,strRecorder2
@@ -159,7 +193,7 @@ def recordStat(ACT, typeFlag):
 def record(ACT, p, q):
     #record each item and make the stat data for each doc
     if (ACT <> MIS and ACT <> SUP):
-        if ( NERtype1[p] == NERtype2[q]): #****
+        if ( NERtype1[p] == NERtype2[q]): 
             typeFlag = "COR"
         else:
             typeFlag = "INC"
@@ -177,8 +211,7 @@ def record(ACT, p, q):
     elif (ACT == MIS):
         fRecord.write("%10s%5s%50s%50s" %("MIS", typeFlag, "", strRecorder2[q]))
     elif (ACT == SUP):
-        fRecord.write("%10s%5s%50s%50s" %("SUP", typeFlag, strRecorder1[p], ""))
-    
+        fRecord.write("%10s%5s%50s%50s" %("SUP", typeFlag, strRecorder1[p], ""))    
     fRecord.write("\n")
     recordStat(ACT, typeFlag)
 
@@ -243,6 +276,7 @@ def compare():
 
 
 def extractDoc(s, pos, NERtype, strRecorder):
+    global g_i
     #print s
     NER_tmp = ""  #tmp var to store char inside parentheses
     str_tmp = ""  #tmp var to store char of a tagged content
@@ -254,37 +288,45 @@ def extractDoc(s, pos, NERtype, strRecorder):
     sp = sp + 1
     sn = len(s)
     inside = False   #the state to indicate inside a parent or not
-    openFlag = True  #the state to indicate current parent is an open one
+    openFlag = False  #the state to indicate current parent is an open one
     while (sp < sn):            
         global docNum
         #if (docNum == 1):
 	    #    print c,i    
         if (c == '<'):        
-            if (openFlag):
+            if (not openFlag):
                 pos.append([])
                 pos[pn].append(i)
-                openFlag = False            
+                openFlag = True            
             else:
                 pos[pn].append(i - 1)
                 strRecorder.append(str_tmp)
                 str_tmp = ""
-                openFlag = True
+                openFlag = False
                 pn = pn + 1
             i = i - 1
             inside = True
         if (c == '>'):        
             inside = False
-            if (not openFlag):
-                NERtype.append(NER_tmp)
-                NER_tmp = ""    
+            if (not openFlag): 
+                NERtype.append(NER_tmp[1:])
+                # adaption for type iteration
+                if (not NER_tmp[:6] in annotate_type[g_i]):
+                    pos.pop()
+                    pn -= 1
+                    strRecorder.pop()
+                    NERtype.pop()
+                # end adaption
+                NER_tmp = ""
+                
         c = s[sp]
         sp = sp + 1
         if (not inside):
             i = i + 1
-            if (not openFlag and c <> '<'):
+            if (openFlag and c <> '<'):
                 str_tmp = str_tmp + c
         else:
-            if (not openFlag and c <> '>'):
+            if (openFlag and c <> '>'):
                 NER_tmp = NER_tmp + c
     #
     #global docNum
@@ -306,22 +348,12 @@ def printSum():# obsolete
 
 
 
-def printAllStat():
-    #print all measure stat data based tp,tn,fp,fn
-    global tp,tn,fp,fn
-    pr = tp/float(tp+fp)
-    re = tp/float(tp+fn)
-    F = 2*pr*re/float(pr+re)
-    fRecord.write("\n\n\n***************************\nStat for all doc\n**************************\n")
-    fRecord.write("%10s %5f\n" %("precision:",pr))
-    fRecord.write("%10s %5f\n" %("recall:",re))
-    fRecord.write("%10s %5f\n" %("F-measure:",F))
-    
+ 
     
    
 
 
-def dealDocly():
+def dealDocly(f1,f2):
     c1 = f1.readline()
     c2 = f2.readline()
     while c1:
@@ -362,12 +394,8 @@ def dealDocly():
         
 #############main##################
 
-dealDocly()
-#printSum()
-printAllStat()
 
-f1.close()
-f2.close()
+type_iter()
 fRecord.close()
 
 #print ansNER
