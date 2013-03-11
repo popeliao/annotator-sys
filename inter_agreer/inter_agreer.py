@@ -242,7 +242,6 @@ def compare():
     q = 0
     while (p < len(pos1) and q < len(pos2)) :
         if (pos1[p][1] < pos2[q][0]):
-            #if (NERtype1[p] == "LOCATION"):
             record(SUP, p, q)
             p = p + 1
         elif(pos1[p][1] < pos2[q][1]):
@@ -266,72 +265,56 @@ def compare():
             else:
                 record(MIS, p, q)
             q = q + 1
-    if (p < len(pos1)):
-        #if (NERtype1[p] == "LOCATION"):
+    while (p < len(pos1)):
         record(SUP, p, q)
         p = p + 1
-    if (q < len(pos2)):
+    while (q < len(pos2)):
         record(MIS, p, q)
         q = q + 1
 
 
 def extractDoc(s, pos, NERtype, strRecorder):
-    global g_i
-    #print s
+    global g_i	  #we're dealing with g_i th ner type
     NER_tmp = ""  #tmp var to store char inside parentheses
     str_tmp = ""  #tmp var to store char of a tagged content
     i = 0         #number of char
-    pn = 0        #number of parentheses
-    
     sp = 0        #pointer of string s
     c = s[sp]     #store current char
     sp = sp + 1
     sn = len(s)
     inside = False   #the state to indicate inside a parent or not
-    openFlag = False  #the state to indicate current parent is an open one
-    while (sp < sn):            
-        global docNum
-        #if (docNum == 1):
-	    #    print c,i    
-        if (c == '<'):        
-            if (not openFlag):
-                pos.append([])
-                pos[pn].append(i)
-                openFlag = True            
-            else:
-                pos[pn].append(i - 1)
-                strRecorder.append(str_tmp)
-                str_tmp = ""
-                openFlag = False
-                pn = pn + 1
-            i = i - 1
-            inside = True
-        if (c == '>'):        
-            inside = False
-            if (not openFlag): 
-                NERtype.append(NER_tmp[1:])
-                # adaption for type iteration
-                if (not NER_tmp[:6] in annotate_type[g_i]):
-                    pos.pop()
-                    pn -= 1
-                    strRecorder.pop()
-                    NERtype.pop()
-                # end adaption
-                NER_tmp = ""
-                
-        c = s[sp]
-        sp = sp + 1
+    openFlag = False  #the state to indicate last parent is an open one
+    while (sp < sn):
+        if c=='<':
+            inside = True            
         if (not inside):
             i = i + 1
-            if (openFlag and c <> '<'):
+            if (openFlag and c <> '<' and c <> '<'):
                 str_tmp = str_tmp + c
         else:
-            if (openFlag and c <> '>'):
-                NER_tmp = NER_tmp + c
-    #
-    #global docNum
-    #if (docNum == 1 or docNum == 2):
-    #print pos, NERtype, strRecorder
+            if (c <> '>' and c <> '<'):
+                NER_tmp = NER_tmp + c    
+        if c=='>':
+            inside = False
+            if (NER_tmp[:6] in annotate_type[g_i]):
+                openFlag = not openFlag
+                if openFlag:
+                    start = i
+                    NER_tmp = ""
+                else:
+                    end = i
+                    pos.append([start,end])
+                    NERtype.append(NER_tmp)
+                    strRecorder.append(str_tmp)
+                    str_tmp = NER_tmp = ""
+            else:
+                NER_tmp = ""
+        c = s[sp]
+        sp = sp + 1                       
+    #print pos
+    #print NERtype
+    #print strRecorder
+    #print '*****************'
 
 def printSum():# obsolete
     
