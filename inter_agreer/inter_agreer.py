@@ -4,6 +4,7 @@
 #                                              :recordStat (tp,fp,tn,fn)
 #
 # The adaption for each iteration one type made is in extractDoc
+
 fRecord = open("result.txt","w")
 
 #classes
@@ -15,8 +16,8 @@ def type_iter():
     global g_i,docNum
     for g_i in range(3):
         docNum = 0
-        f1 = open("150_200_a_a.txt","r")     #t1 is response
-        f2 = open("150_200_a_p.txt","r")     #t2 is key
+        f1 = open("data_200_150_200_a.txt","r")     #t1 is response
+        f2 = open("data_200_150_200_p.txt","r")     #t2 is key
         fRecord.write("\n\n\n***************************\nagreement result for %s\n**************************\n" %(annotate_type_name[g_i]))
         dealDocly(f1, f2)
         printAllStat()
