@@ -1,4 +1,5 @@
 #reduce all the empty lines
+#need the input doc in the form of unix EOl
 import os
 import sys
 import re

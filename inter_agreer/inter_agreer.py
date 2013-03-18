@@ -16,8 +16,10 @@ def type_iter():
     global g_i,docNum
     for g_i in range(3):
         docNum = 0
-        f1 = open("data_200_150_200_a.txt","r")     #t1 is response
-        f2 = open("data_200_150_200_p.txt","r")     #t2 is key
+        f1 = open("response.txt","r")     #t1 is response
+        #f2 = open("data_200_150_200_p.txt","r")     #t2 is key
+        f2 = open("key.txt","r")     #t2 is key
+        
         fRecord.write("\n\n\n***************************\nagreement result for %s\n**************************\n" %(annotate_type_name[g_i]))
         dealDocly(f1, f2)
         printAllStat()
