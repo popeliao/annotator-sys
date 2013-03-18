@@ -332,51 +332,41 @@ def printSum():# obsolete
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("PER",sumAnsNER["PERSON"][COR],sumAnsNER["PERSON"][INC],sumAnsNER["PERSON"][PAR],sumAnsNER["PERSON"][MIS],sumAnsNER["PERSON"][SUP]))
     fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("ORG",sumAnsNER["ORGANIZATION"][COR],sumAnsNER["ORGANIZATION"][INC],sumAnsNER["ORGANIZATION"][PAR],sumAnsNER["ORGANIZATION"][MIS],sumAnsNER["ORGANIZATION"][SUP]))
 
-
-
- 
-    
-   
-
-
 def dealDocly(f1,f2):
     c1 = f1.readline()
     c2 = f2.readline()
     while c1:
-        while not "<doc>" in c1:
+        while c1 and not "<doc>" in c1:
             c1 = f1.readline()
-        while not "<doc>" in c2:
+        while c2 and not "<doc>" in c2:
             c2 = f2.readline()
-        s1 = ""
-        s2 = ""
-        c1 = f1.readline()
-        c2 = f2.readline()
-        while not "</doc>" in c1:
-            s1 = s1 + c1
+        if c1 and c2:
+            s1 = ""
+            s2 = ""
             c1 = f1.readline()
-        while not "</doc>" in c2:
-            s2 = s2 + c2
             c2 = f2.readline()
+            while not "</doc>" in c1:
+                s1 = s1 + c1
+                c1 = f1.readline()
+            while not "</doc>" in c2:
+                s2 = s2 + c2
+                c2 = f2.readline()
 
-        global docNum
-        docNum = docNum + 1
-        #print docNum
-        fRecord.write("---------------------------------------------------------------------------------------------------------------------\n")
-        fRecord.write("Summary for Doc" + str(docNum) + "\n")
-        fRecord.write("%10s%5s%50s%50s\n" %("POSITION","TYPE","RSP_TEXT","KEY_TEXT"))
-        init()
-        extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
-        extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key
-        compare()   #in compare func, we does 3 things
-                    #1 we record all the details 
-                    #2 we print all the details
-                    #3 we make stat data based on the details
-
-        #printStat()       
-        #sumRecord()    
-
-        c1 = f1.readline()
-        c2 = f2.readline()   
+            global docNum
+            docNum = docNum + 1
+            #print docNum
+            fRecord.write("---------------------------------------------------------------------------------------------------------------------\n")
+            fRecord.write("Summary for Doc" + str(docNum) + "\n")
+            fRecord.write("%10s%5s%50s%50s\n" %("POSITION","TYPE","RSP_TEXT","KEY_TEXT"))
+            init()
+            extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
+            extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key
+            compare()   #in compare func, we does 3 things
+                        #1 we record all the details 
+                        #2 we print all the details
+                        #3 we make stat data based on the details        
+            c1 = f1.readline()
+            c2 = f2.readline()   
         
 #############main##################
 
