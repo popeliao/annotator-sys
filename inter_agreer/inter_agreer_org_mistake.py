@@ -238,16 +238,16 @@ def record(ACT, p, q):
         if (ACT == SUP):
             typeFlag = "SUP"
     if (ACT == COR):        
-        fRecord.write("%10s%5s%50s%50s" %("COR", typeFlag, strRecorder1[p], strRecorder2[q]))
+        fRecord.write("%s\nRSP==  %s\nKEY==  %s\n" %("COR", strRecorder1[p], strRecorder2[q]))
     elif (ACT == INC):
-        fRecord.write("%10s%5s%50s%50s" %("INC", typeFlag, strRecorder1[p], strRecorder2[q]))
+        fRecord.write("%s\nRSP==  %s\nKEY==  %s\n" %("INC", strRecorder1[p], strRecorder2[q]))        
     elif (ACT == PAR):
-        fRecord.write("%10s%5s%50s%50s" %("PAR", typeFlag, strRecorder1[p], strRecorder2[q]))
+        fRecord.write("%s\nRSP==  %s\nKEY==  %s\n" %("PAR", strRecorder1[p], strRecorder2[q]))        
     elif (ACT == MIS):
-        fRecord.write("%10s%5s%50s%50s" %("MIS", typeFlag, "", strRecorder2[q]))
+        fRecord.write("%s\nRSP==  %s\nKEY==  %s\n" %("MIS", "", strRecorder2[q]))        
     elif (ACT == SUP):
-        fRecord.write("%10s%5s%50s%50s" %("SUP", typeFlag, strRecorder1[p], ""))    
-    fRecord.write("\n")
+        fRecord.write("%s\nRSP==  %s\nKEY==  %s\n" %("SUP", strRecorder1[p], ""))        
+    fRecord.write("-----------------\n")
     recordStat(ACT, typeFlag)
 
 
@@ -308,6 +308,46 @@ def compare():
         record(MIS, p, q)
         q = q + 1
 
+def extractDoc_with_context(s, pos, NERtype, strRecorder):
+    global g_i    #we're dealing with g_i th ner type
+    NER_tmp = ""  #tmp var to store char inside parentheses
+    str_tmp = ""  #tmp var to store char of a tagged content
+    i = 0         #number of char
+    sp = 0        #pointer of string s
+    c = s[sp]     #store current char
+    sp = sp + 1
+    sn = len(s)
+    inside = False   #the state to indicate inside a parent or not
+    openFlag = False  #the state to indicate last parent is an open one
+    while (sp < sn):
+        if c=='<':
+            inside = True            
+        if (not inside):
+            i = i + 1
+            if (openFlag and c <> '<' and c <> '<'):
+                str_tmp = str_tmp + c
+        else:
+            if (c <> '>' and c <> '<'):
+                NER_tmp = NER_tmp + c    
+        if c=='>':
+            inside = False
+            if (NER_tmp[:6] in annotate_type[g_i]):
+                openFlag = not openFlag
+                if openFlag:
+                    start = i
+                    start_abs = sp - 30 if sp - 30 > 0 else 0
+                    NER_tmp = ""
+                else:
+                    end = i
+                    pos.append([start,end])
+                    NERtype.append(NER_tmp)
+                    str_tmp = s[start_abs:sp + 30].replace('\n',' ') # make it included context
+                    strRecorder.append(str_tmp)
+                    str_tmp = NER_tmp = ""
+            else:
+                NER_tmp = ""
+        c = s[sp]
+        sp = sp + 1                       
 
 def extractDoc(s, pos, NERtype, strRecorder):
     global g_i	  #we're dealing with g_i th ner type
@@ -378,21 +418,21 @@ def dealDocly(f1,f2):
             #print docNum
             fRecord.write("---------------------------------------------------------------------------------------------------------------------\n")
             fRecord.write("Summary for Doc" + str(docNum) + "\n")
-            fRecord.write("%10s%5s%50s%50s\n" %("POSITION","TYPE","RSP_TEXT","KEY_TEXT"))
+            fRecord.write("-----------------\n")            
             init()
 
             global g_i, org_pos_1
             if g_i == 0: # it is a CITY annotation
                 g_i = 1 # change mode to ORG
-                extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
+                extractDoc_with_context(s1, pos1, NERtype1, strRecorder1) #t1 is response
                 org_pos_1 = pos1[:]
                 init()
                 g_i = 0
-                extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
-                extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key                
+                extractDoc_with_context(s1, pos1, NERtype1, strRecorder1) #t1 is response
+                extractDoc_with_context(s2, pos2, NERtype2, strRecorder2) #t2 is key                
             else:
-                extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
-                extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key
+                extractDoc_with_context(s1, pos1, NERtype1, strRecorder1) #t1 is response
+                extractDoc_with_context(s2, pos2, NERtype2, strRecorder2) #t2 is key
 
             compare()   #in compare func, we does 3 things
                         #1 we record all the details 
