@@ -1,3 +1,6 @@
+# A COPY OF inter_agree.py FOR KEEP TRACK OF MIS MISTAKE OF CITY
+# IN ORDER TO SEE WHETHER MOST OF THEM IS INSIDE A ORGANIZATION RECOGNINION
+
 #main->type_iter 
 #     dealDocly                                ->compare                   ->printAllStat
 #    :extractDoc(pos, NERtype, strRecorder)    :record
@@ -12,9 +15,15 @@ annotate_type = [["NE:CIT","/NE:CI"],["NE:ORG","/NE:OR"],["NE:LOC","/NE:LO"]]
 g_i = 0
 annotate_type_name = ["CITY","ORGANIZATION","LOCATION"]
 
+#For keep track of all organization position in response.txt
+g_mis = 0
+g_mis_orz = 0
+org_pos_1 = []
+
 def type_iter():    
     #iterate the whole docs but only judge one tyep
     global g_i,docNum
+    global pos1
     for g_i in range(3):
         docNum = 0
         f1 = open("response.txt","r")     #t1 is response
@@ -23,8 +32,13 @@ def type_iter():
         fRecord.write("\n\n\n***************************\nagreement result for %s\n**************************\n" %(annotate_type_name[g_i]))
         dealDocly(f1, f2)
         printAllStat()
+        if g_i == 0:
+            fRecord.write("For CITY annotation\n")
+            fRecord.write("All missing: %d   The missing mistake that is marked as organization: %d" %(g_mis, g_mis_orz))
         f1.close()
         f2.close()
+       
+    
 
 
 def printAllStat():
@@ -186,14 +200,32 @@ def recordStat(ACT, typeFlag):
     #ACT(postion) and typeFlag(type), see about_measure for reference
     global tp,tn,fp,fn
     #strictly matching for postion, don't care type  
+
+    
     if ACT == MIS:
         fn += 1
+        if g_i == 0:
+            global g_mis
+            g_mis += 1
     elif ACT == COR:
         tp += 1
     else:
         fp += 1
 
+ 
 def record(ACT, p, q):
+    #This part gathers missing mistake that is actually annoated by NE:ORG
+
+    if g_i == 0: # it is record for CITY annotation
+        global g_mis_orz, org_pos_1
+        if ACT == MIS:
+            for [begin, end] in org_pos_1:
+                if (pos2[q][0] > end or pos2[q][1] < begin):
+                    pass
+                else:
+                    g_mis_orz += 1
+                    break
+
     #record each item and make the stat data for each doc
     if (ACT <> MIS and ACT <> SUP):
         if ( NERtype1[p] == NERtype2[q]): 
@@ -239,6 +271,7 @@ def record(ACT, p, q):
     #if (ACT <> MIS and ACT <> SUP):
     #    if (p < len (NERtype1) and q < len (NERtype2) and NERtype2[q]=="LOCATION" and NERtype1[p]<>"LOCATION"): #*****
     #        ansNER[NERtype1[p]][ACT] = ansNER[NERtype1[p]][ACT] + 1            
+
 
 def compare():
     p = 0
@@ -314,23 +347,11 @@ def extractDoc(s, pos, NERtype, strRecorder):
                 NER_tmp = ""
         c = s[sp]
         sp = sp + 1                       
-    #print pos
+    #print len(pos)
     #print NERtype
     #print strRecorder
     #print '*****************'
 
-def printSum():# obsolete
-    
-    fRecord.write("\n\n\n***************************\nStat for all doc\n**************************\n")
-    fRecord.write("\nStat for LOCATION\n")
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("COR",sumAnsLOC[COR][COR],sumAnsLOC[COR][INC],sumAnsLOC[COR][PAR],sumAnsLOC[COR][MIS],sumAnsLOC[COR][SUP]))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("INC",sumAnsLOC[INC][COR],sumAnsLOC[INC][INC],sumAnsLOC[INC][PAR],"N\A","N\A"))
-    
-    fRecord.write("\nStat for LOCATION tagged as other NE\n")
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("PER",sumAnsNER["PERSON"][COR],sumAnsNER["PERSON"][INC],sumAnsNER["PERSON"][PAR],sumAnsNER["PERSON"][MIS],sumAnsNER["PERSON"][SUP]))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("ORG",sumAnsNER["ORGANIZATION"][COR],sumAnsNER["ORGANIZATION"][INC],sumAnsNER["ORGANIZATION"][PAR],sumAnsNER["ORGANIZATION"][MIS],sumAnsNER["ORGANIZATION"][SUP]))
 
 def dealDocly(f1,f2):
     c1 = f1.readline()
@@ -359,8 +380,20 @@ def dealDocly(f1,f2):
             fRecord.write("Summary for Doc" + str(docNum) + "\n")
             fRecord.write("%10s%5s%50s%50s\n" %("POSITION","TYPE","RSP_TEXT","KEY_TEXT"))
             init()
-            extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
-            extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key
+
+            global g_i, org_pos_1
+            if g_i == 0: # it is a CITY annotation
+                g_i = 1 # change mode to ORG
+                extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
+                org_pos_1 = pos1[:]
+                init()
+                g_i = 0
+                extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
+                extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key                
+            else:
+                extractDoc(s1, pos1, NERtype1, strRecorder1) #t1 is response
+                extractDoc(s2, pos2, NERtype2, strRecorder2) #t2 is key
+
             compare()   #in compare func, we does 3 things
                         #1 we record all the details 
                         #2 we print all the details
