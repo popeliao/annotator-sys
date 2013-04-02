@@ -13,8 +13,7 @@ def main(argv):
     i = 0
     countryList = []
     for line in f:
-        if len(line) <> 3: #len == 3 means it's an abbre
-            countryList.append(line[:-1])
+        countryList.append(line[:-1])
     pickle.dump(countryList, fout)
     f.close()
     fout.close()
