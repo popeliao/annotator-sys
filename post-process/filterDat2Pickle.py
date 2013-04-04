@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-#extractCountry
-#function:  extract Country name from argv[1] into a list
-#           write the dict into argv[2] using pickle
+#function:  extract filter keywords from argv[1](*.dat) into a list
+#           write the dict into argv[2](*.pickle) using pickle
 
 import sys
 import re

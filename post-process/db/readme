@@ -1,0 +1,8 @@
+Illustration for things contained in db dirctory 
+
+*.in:
+    things that is used to obtain *.dat
+*.dat:      
+    a list of string that is going to be filtering key word
+*.pickle:
+    Pickle files that could be loaded to obtain direct python objects
