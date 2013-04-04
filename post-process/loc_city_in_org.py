@@ -4,10 +4,11 @@
 
 # -*- coding: utf-8 -*-
 """
-~~~ filter.py ~~~
+~~~ loc_city_in_org.py ~~~
 This script takes an NER-tool annotated docs as input,
-it conducts post-process that filter all the words annotated as CITY 
-when it exactly appear in the filter list. 
+
+it conducts post-process that locate all city name inside ORG annotations, 
+and mark it as CITY
 
 The eventual output is a post-processed doc
 
@@ -38,7 +39,7 @@ class Filter(object):
         for i in range(len(tagList)):                        
             result += elseList[i]
             m = pmatch.match(tagList[i])
-            if not m.group(1).lower() in self.filterList:
+            if not m.group(1) in self.filterList:
                 result += tagList[i]  
             else:
                 result += m.group(1)

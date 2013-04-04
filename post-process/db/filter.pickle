@@ -1,540 +1,540 @@
 (lp0
-S'World'
+S'world'
 p1
-aS'Europe'
+aS'europe'
 p2
-aS'Asia'
+aS'asia'
 p3
-aS'Australia'
+aS'australia'
 p4
-aS'Africa'
+aS'africa'
 p5
-aS'North America'
+aS'north america'
 p6
-aS'South America'
+aS'south america'
 p7
-aS'Oceania'
+aS'oceania'
 p8
-aS'Antarctica'
+aS'antarctica'
 p9
-aS'Australasia'
+aS'australasia'
 p10
-aS'Caribbean'
+aS'caribbean'
 p11
-aS'Middle East'
+aS'middle east'
 p12
-aS'Western Asia'
+aS'western asia'
 p13
-aS'Eastern Asia'
+aS'eastern asia'
 p14
-aS'Southeastern Asia'
+aS'southeastern asia'
 p15
-aS'Western Europe'
+aS'western europe'
 p16
-aS'Eastern Europe'
+aS'eastern europe'
 p17
-aS'U.S.'
+aS'u.s.'
 p18
-aS'U.S.A.'
+aS'u.s.a.'
 p19
-aS'America'
+aS'america'
 p20
-aS'Afghanistan'
+aS'afghanistan'
 p21
-aS'\xc3\x85lan Islands'
+aS'\xc3\x85lan islands'
 p22
-aS'Albania'
+aS'albania'
 p23
-aS'Algeria'
+aS'algeria'
 p24
-aS'American Samoa'
+aS'american samoa'
 p25
-aS'Andorra'
+aS'andorra'
 p26
-aS'Angola'
+aS'angola'
 p27
-aS'Anguilla'
+aS'anguilla'
 p28
-aS'Antarctica'
+aS'antarctica'
 p29
-aS'Antigua and Barbuda'
+aS'antigua and barbuda'
 p30
-aS'Argentina'
+aS'argentina'
 p31
-aS'Armenia'
+aS'armenia'
 p32
-aS'Aruba'
+aS'aruba'
 p33
-aS'Australia'
+aS'australia'
 p34
-aS'Austria'
+aS'austria'
 p35
-aS'Azerbaijan'
+aS'azerbaijan'
 p36
-aS'Bahamas'
+aS'bahamas'
 p37
-aS'Bahrain'
+aS'bahrain'
 p38
-aS'Bangladesh'
+aS'bangladesh'
 p39
-aS'Barbados'
+aS'barbados'
 p40
-aS'Belarus'
+aS'belarus'
 p41
-aS'Belgium'
+aS'belgium'
 p42
-aS'Belize'
+aS'belize'
 p43
-aS'Benin'
+aS'benin'
 p44
-aS'Bermuda'
+aS'bermuda'
 p45
-aS'Bhutan'
+aS'bhutan'
 p46
-aS'Bolivia'
+aS'bolivia'
 p47
-aS'Bonaire, Sint Eustatius and Saba'
+aS'bonaire, sint eustatius and saba'
 p48
-aS'Bosnia and Herzegovina'
+aS'bosnia and herzegovina'
 p49
-aS'Botswana'
+aS'botswana'
 p50
-aS'Brazil'
+aS'brazil'
 p51
-aS'British Indian Ocean Territory'
+aS'british indian ocean territory'
 p52
-aS'Brunei Darussalam'
+aS'brunei darussalam'
 p53
-aS'Bulgaria'
+aS'bulgaria'
 p54
-aS'Burkina Faso'
+aS'burkina faso'
 p55
-aS'Burundi'
+aS'burundi'
 p56
-aS'Cambodia'
+aS'cambodia'
 p57
-aS'Cameroon'
+aS'cameroon'
 p58
-aS'Canada'
+aS'canada'
 p59
-aS'Cape Verde'
+aS'cape verde'
 p60
-aS'Cayman Islands'
+aS'cayman islands'
 p61
-aS'Central African Republic'
+aS'central african republic'
 p62
-aS'Chad'
+aS'chad'
 p63
-aS'Chile'
+aS'chile'
 p64
-aS'China'
+aS'china'
 p65
-aS'Christmas Island'
+aS'christmas island'
 p66
-aS'Cocos (Keeling) Islands'
+aS'cocos (keeling) islands'
 p67
-aS'Colombia'
+aS'colombia'
 p68
-aS'Comoros'
+aS'comoros'
 p69
-aS'Congo'
+aS'congo'
 p70
-aS'Congo, The Democratic Republic of the'
+aS'congo, the democratic republic of the'
 p71
-aS'Cook Islands'
+aS'cook islands'
 p72
-aS'Costa Rica'
+aS'costa rica'
 p73
-aS"C\xc3\xb4te d'Ivoire"
+aS"c\xc3\xb4te d'ivoire"
 p74
-aS'Croatia'
+aS'croatia'
 p75
-aS'Cuba'
+aS'cuba'
 p76
-aS'Cura\xc3\xa7ao'
+aS'cura\xc3\xa7ao'
 p77
-aS'Cyprus'
+aS'cyprus'
 p78
-aS'Czech Republic'
+aS'czech republic'
 p79
-aS'Denmark'
+aS'denmark'
 p80
-aS'Djibouti'
+aS'djibouti'
 p81
-aS'Dominica'
+aS'dominica'
 p82
-aS'Dominican Republic'
+aS'dominican republic'
 p83
-aS'Ecuador'
+aS'ecuador'
 p84
-aS'Egypt'
+aS'egypt'
 p85
-aS'El Salvador'
+aS'el salvador'
 p86
-aS'Equatorial Guinea'
+aS'equatorial guinea'
 p87
-aS'Eritrea'
+aS'eritrea'
 p88
-aS'Estonia'
+aS'estonia'
 p89
-aS'Ethiopia'
+aS'ethiopia'
 p90
-aS'Falkland Islands (Malvinas)'
+aS'falkland islands (malvinas)'
 p91
-aS'Faroe Islands'
+aS'faroe islands'
 p92
-aS'Fiji'
+aS'fiji'
 p93
-aS'Finland'
+aS'finland'
 p94
-aS'France'
+aS'france'
 p95
-aS'French Guiana'
+aS'french guiana'
 p96
-aS'French Polynesia'
+aS'french polynesia'
 p97
-aS'French Southern Territories'
+aS'french southern territories'
 p98
-aS'Gabon'
+aS'gabon'
 p99
-aS'Gambia'
+aS'gambia'
 p100
-aS'Georgia'
+aS'georgia'
 p101
-aS'Germany'
+aS'germany'
 p102
-aS'Ghana'
+aS'ghana'
 p103
-aS'Gibraltar'
+aS'gibraltar'
 p104
-aS'Greece'
+aS'greece'
 p105
-aS'Greenland'
+aS'greenland'
 p106
-aS'Grenada'
+aS'grenada'
 p107
-aS'Guadeloupe'
+aS'guadeloupe'
 p108
-aS'Guam'
+aS'guam'
 p109
-aS'Guatemala'
+aS'guatemala'
 p110
-aS'Guernsey'
+aS'guernsey'
 p111
-aS'Guinea'
+aS'guinea'
 p112
-aS'Guinea-Bissau'
+aS'guinea-bissau'
 p113
-aS'Guyana'
+aS'guyana'
 p114
-aS'Haiti'
+aS'haiti'
 p115
-aS'Heard Island and McDonald Islands'
+aS'heard island and mcdonald islands'
 p116
-aS'Holy See (Vatican City State)'
+aS'holy see (vatican city state)'
 p117
-aS'Honduras'
+aS'honduras'
 p118
-aS'Hong Kong'
+aS'hong kong'
 p119
-aS'Hungary'
+aS'hungary'
 p120
-aS'Iceland'
+aS'iceland'
 p121
-aS'India'
+aS'india'
 p122
-aS'Indonesia'
+aS'indonesia'
 p123
-aS'Installations in International Waters'
+aS'installations in international waters'
 p124
-aS'Iran, Islamic Republic of'
+aS'iran, islamic republic of'
 p125
-aS'Iraq'
+aS'iraq'
 p126
-aS'Ireland'
+aS'ireland'
 p127
-aS'Isle of Man'
+aS'isle of man'
 p128
-aS'Israel'
+aS'israel'
 p129
-aS'Italy'
+aS'italy'
 p130
-aS'Jamaica'
+aS'jamaica'
 p131
-aS'Japan'
+aS'japan'
 p132
-aS'Jersey'
+aS'jersey'
 p133
-aS'Jordan'
+aS'jordan'
 p134
-aS'Kazakhstan'
+aS'kazakhstan'
 p135
-aS'Kenya'
+aS'kenya'
 p136
-aS'Kiribati'
+aS'kiribati'
 p137
-aS"Korea, Democratic People's Republic of"
+aS"korea, democratic people's republic of"
 p138
-aS'Korea, Republic of'
+aS'korea, republic of'
 p139
-aS'Kuwait'
+aS'kuwait'
 p140
-aS'Kyrgyzstan'
+aS'kyrgyzstan'
 p141
-aS"Lao People's Democratic Republic"
+aS"lao people's democratic republic"
 p142
-aS'Latvia'
+aS'latvia'
 p143
-aS'Lebanon'
+aS'lebanon'
 p144
-aS'Lesotho'
+aS'lesotho'
 p145
-aS'Liberia'
+aS'liberia'
 p146
-aS'Libya'
+aS'libya'
 p147
-aS'Liechtenstein'
+aS'liechtenstein'
 p148
-aS'Lithuania'
+aS'lithuania'
 p149
-aS'Luxembourg'
+aS'luxembourg'
 p150
-aS'Macao'
+aS'macao'
 p151
-aS'Macedonia, The former Yugoslav Republic of'
+aS'macedonia, the former yugoslav republic of'
 p152
-aS'Madagascar'
+aS'madagascar'
 p153
-aS'Malawi'
+aS'malawi'
 p154
-aS'Malaysia'
+aS'malaysia'
 p155
-aS'Maldives'
+aS'maldives'
 p156
-aS'Mali'
+aS'mali'
 p157
-aS'Malta'
+aS'malta'
 p158
-aS'Marshall Islands'
+aS'marshall islands'
 p159
-aS'Martinique'
+aS'martinique'
 p160
-aS'Mauritania'
+aS'mauritania'
 p161
-aS'Mauritius'
+aS'mauritius'
 p162
-aS'Mayotte'
+aS'mayotte'
 p163
-aS'Mexico'
+aS'mexico'
 p164
-aS'Micronesia, Federated States of'
+aS'micronesia, federated states of'
 p165
-aS'Moldova, Republic of'
+aS'moldova, republic of'
 p166
-aS'Monaco'
+aS'monaco'
 p167
-aS'Mongolia'
+aS'mongolia'
 p168
-aS'Montenegro'
+aS'montenegro'
 p169
-aS'Montserrat'
+aS'montserrat'
 p170
-aS'Morocco'
+aS'morocco'
 p171
-aS'Mozambique'
+aS'mozambique'
 p172
-aS'Myanmar'
+aS'myanmar'
 p173
-aS'Namibia'
+aS'namibia'
 p174
-aS'Nauru'
+aS'nauru'
 p175
-aS'Nepal'
+aS'nepal'
 p176
-aS'Netherlands'
+aS'netherlands'
 p177
-aS'New Caledonia'
+aS'new caledonia'
 p178
-aS'New Zealand'
+aS'new zealand'
 p179
-aS'Nicaragua'
+aS'nicaragua'
 p180
-aS'Niger'
+aS'niger'
 p181
-aS'Nigeria'
+aS'nigeria'
 p182
-aS'Niue'
+aS'niue'
 p183
-aS'Norfolk Island'
+aS'norfolk island'
 p184
-aS'Northern Mariana Islands'
+aS'northern mariana islands'
 p185
-aS'Norway'
+aS'norway'
 p186
-aS'Oman'
+aS'oman'
 p187
-aS'Pakistan'
+aS'pakistan'
 p188
-aS'Palau'
+aS'palau'
 p189
-aS'Palestine, State of'
+aS'palestine, state of'
 p190
-aS'Panama'
+aS'panama'
 p191
-aS'Papua New Guinea'
+aS'papua new guinea'
 p192
-aS'Paraguay'
+aS'paraguay'
 p193
-aS'Peru'
+aS'peru'
 p194
-aS'Philippines'
+aS'philippines'
 p195
-aS'Pitcairn'
+aS'pitcairn'
 p196
-aS'Poland'
+aS'poland'
 p197
-aS'Portugal'
+aS'portugal'
 p198
-aS'Puerto Rico'
+aS'puerto rico'
 p199
-aS'Qatar'
+aS'qatar'
 p200
-aS'Reunion'
+aS'reunion'
 p201
-aS'Romania'
+aS'romania'
 p202
-aS'Russian Federation'
+aS'russian federation'
 p203
-aS'Rwanda'
+aS'rwanda'
 p204
-aS'Saint Barth\xc3\xa9lemy'
+aS'saint barth\xc3\xa9lemy'
 p205
-aS'Saint Helena, Ascension and Tristan Da Cunha'
+aS'saint helena, ascension and tristan da cunha'
 p206
-aS'Saint Kitts and Nevis'
+aS'saint kitts and nevis'
 p207
-aS'Saint Lucia'
+aS'saint lucia'
 p208
-aS'Saint Martin (French Part)'
+aS'saint martin (french part)'
 p209
-aS'Saint Pierre and Miquelon'
+aS'saint pierre and miquelon'
 p210
-aS'Saint Vincent and the Grenadines'
+aS'saint vincent and the grenadines'
 p211
-aS'Samoa'
+aS'samoa'
 p212
-aS'San Marino'
+aS'san marino'
 p213
-aS'Sao Tome and Principe'
+aS'sao tome and principe'
 p214
-aS'Saudi Arabia'
+aS'saudi arabia'
 p215
-aS'Senegal'
+aS'senegal'
 p216
-aS'Serbia'
+aS'serbia'
 p217
-aS'Seychelles'
+aS'seychelles'
 p218
-aS'Sierra Leone'
+aS'sierra leone'
 p219
-aS'Singapore'
+aS'singapore'
 p220
-aS'Sint Maarten (Dutch Part)'
+aS'sint maarten (dutch part)'
 p221
-aS'Slovakia'
+aS'slovakia'
 p222
-aS'Slovenia'
+aS'slovenia'
 p223
-aS'Solomon Islands'
+aS'solomon islands'
 p224
-aS'Somalia'
+aS'somalia'
 p225
-aS'South Africa'
+aS'south africa'
 p226
-aS'South Georgia and the South Sandwich Islands'
+aS'south georgia and the south sandwich islands'
 p227
-aS'South Sudan'
+aS'south sudan'
 p228
-aS'Spain'
+aS'spain'
 p229
-aS'Sri Lanka'
+aS'sri lanka'
 p230
-aS'Sudan'
+aS'sudan'
 p231
-aS'Suriname'
+aS'suriname'
 p232
-aS'Svalbard and Jan Mayen'
+aS'svalbard and jan mayen'
 p233
-aS'Swaziland'
+aS'swaziland'
 p234
-aS'Sweden'
+aS'sweden'
 p235
-aS'Switzerland'
+aS'switzerland'
 p236
-aS'Syrian Arab Republic'
+aS'syrian arab republic'
 p237
-aS'Taiwan, Province of China'
+aS'taiwan, province of china'
 p238
-aS'Tajikistan'
+aS'tajikistan'
 p239
-aS'Tanzania, United Republic of'
+aS'tanzania, united republic of'
 p240
-aS'Thailand'
+aS'thailand'
 p241
-aS'Timor-Leste'
+aS'timor-leste'
 p242
-aS'Togo'
+aS'togo'
 p243
-aS'Tokelau'
+aS'tokelau'
 p244
-aS'Tonga'
+aS'tonga'
 p245
-aS'Trinidad and Tobago'
+aS'trinidad and tobago'
 p246
-aS'Tunisia'
+aS'tunisia'
 p247
-aS'Turkey'
+aS'turkey'
 p248
-aS'Turkmenistan'
+aS'turkmenistan'
 p249
-aS'Turks and Caicos Islands'
+aS'turks and caicos islands'
 p250
-aS'Tuvalu'
+aS'tuvalu'
 p251
-aS'Uganda'
+aS'uganda'
 p252
-aS'Ukraine'
+aS'ukraine'
 p253
-aS'United Arab Emirates'
+aS'united arab emirates'
 p254
-aS'United Kingdom'
+aS'united kingdom'
 p255
-aS'United States'
+aS'united states'
 p256
-aS'United States Minor Outlying Islands'
+aS'united states minor outlying islands'
 p257
-aS'Uruguay'
+aS'uruguay'
 p258
-aS'Uzbekistan'
+aS'uzbekistan'
 p259
-aS'Vanuatu'
+aS'vanuatu'
 p260
-aS'Venezuela'
+aS'venezuela'
 p261
-aS'Viet Nam'
+aS'viet nam'
 p262
-aS'Virgin Islands, British'
+aS'virgin islands, british'
 p263
-aS'Virgin Islands, U.S.'
+aS'virgin islands, u.s.'
 p264
-aS'Wallis and Futuna'
+aS'wallis and futuna'
 p265
-aS'Western Sahara'
+aS'western sahara'
 p266
-aS'Yemen'
+aS'yemen'
 p267
-aS'Zambia'
+aS'zambia'
 p268
-aS'Zimbabwe'
+aS'zimbabwe'
 p269
 a.
