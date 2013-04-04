@@ -1,4 +1,7 @@
-#da xiao xie wen ti
+#To improve list
+#1 filter list could be converted into lower case
+
+
 # -*- coding: utf-8 -*-
 """
 ~~~ filter.py ~~~
