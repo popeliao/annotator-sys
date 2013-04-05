@@ -21,7 +21,7 @@ import re
 import pickle
 
 class Filter(object):
-    def __init__(self,filterListPickle, fin, fout, silent = true):
+    def __init__(self,filterListPickle, fin, fout, silent = false):
         self.filterList = pickle.load(filterListPickle)
         self.fin = fin
         self.fout = fout
