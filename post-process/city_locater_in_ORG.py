@@ -40,7 +40,9 @@ class City_locater_in_ORG(object):
             result += elseList[i]
             m = pmatch.match(tagList[i])
             tmp = self.isCityInside(m.group(1))
-            result += tmp[0] if tmp[1] else tagList[i] #will unmark ORG if CITY exsits inside
+            result += tmp[0][:-1] if tmp[1] else tagList[i] 
+            #will unmark ORG if CITY exsits inside
+            #And use tmp[0][:-1] to delete the redundant blank
         if len(tagList) < len(elseList):
             result += elseList[-1]
         if not self.silent:
