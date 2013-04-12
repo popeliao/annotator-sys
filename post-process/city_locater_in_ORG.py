@@ -62,7 +62,7 @@ class City_locater_in_ORG(object):
                 if ' '.join(allWords[begin:end]).lower() in self.city_name_list:
                     result += '<NE:CITY>'+ ' '.join(allWords[begin:end]) +'</NE:CITY> '
                     result += self.isCityInside(' '.join(allWords[end:]))[0]
-                    return [result, True]
+                    return [result[:-1], True] #-1 to reduce the ending blank
                 end -= 1
             result += allWords[begin] + ' '
             begin += 1

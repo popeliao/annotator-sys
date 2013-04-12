@@ -434,6 +434,12 @@ def dealDocly(f1,f2):
                 extractDoc_with_context(s1, pos1, NERtype1, strRecorder1) #t1 is response
                 extractDoc_with_context(s2, pos2, NERtype2, strRecorder2) #t2 is key
 
+            print pos1
+            print strRecorder1
+            print '**************'
+            print pos2 
+            print strRecorder2
+            print '**************'
             compare()   #in compare func, we does 3 things
                         #1 we record all the details 
                         #2 we print all the details
