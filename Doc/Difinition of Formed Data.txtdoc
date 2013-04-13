@@ -1,0 +1,6 @@
+All doc under this directory satisfies two following criteria:
+1: no begining and trailing or extra blank
+2: no redundant empty lines
+3: EOL is in the form of Linux, i.e. /LF
+4: encoded in the form of UTF-8
+5: All brackets around url has been eliminated (All things with brackets have special annotation meaning)
