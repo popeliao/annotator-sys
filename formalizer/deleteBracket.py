@@ -1,4 +1,5 @@
 #pre-formalizer
+#this python file only deal with raw(un-annotated) docs
 #function 1: delete all the '<' and '>' from raw dataset
 #And it must save all the the '<' and '>' that appear in <doc> </doc> like position 
 
