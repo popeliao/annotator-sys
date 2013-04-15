@@ -5,6 +5,7 @@
 # -*- coding: utf-8 -*-
 """
 ~~~ city_locater_in_ORG.py ~~~
+Standard arg[1] -> arg[2] interface
 This script takes an NER-tool annotated docs as input,
 
 it conducts post-process that locate all city name inside ORG annotations, 
@@ -40,9 +41,9 @@ class City_locater_in_ORG(object):
             result += elseList[i]
             m = pmatch.match(tagList[i])
             tmp = self.isCityInside(m.group(1))
-            result += tmp[0][:-1] if tmp[1] else tagList[i] 
+            result += tmp[0] if tmp[1] else tagList[i] 
             #will unmark ORG if CITY exsits inside
-            #And use tmp[0][:-1] to delete the redundant blank
+            
         if len(tagList) < len(elseList):
             result += elseList[-1]
         if not self.silent:
@@ -56,19 +57,22 @@ class City_locater_in_ORG(object):
         #When matching city name, it is greedy and right-first
         result = ''        
         allWords = str.split()
-        n = len(allWords)
+        n = len(allWords)        
         begin = 0
         while begin < n:
             end = n
             while end > begin:
                 if ' '.join(allWords[begin:end]).lower() in self.city_name_list:
                     result += '<NE:CITY>'+ ' '.join(allWords[begin:end]) +'</NE:CITY> '
-                    result += self.isCityInside(' '.join(allWords[end:]))[0]
-                    return [result[:-1], True] #-1 to reduce the ending blank
+                    if end == n:
+                        return [result[:-1], True] #-1 to reduce the ending blank
+                    else:
+                        result += self.isCityInside(' '.join(allWords[end:]))[0]                    
+                        return [result, True] 
                 end -= 1
             result += allWords[begin] + ' '
             begin += 1
-        return [result, False]
+        return [result[:-1], False] #-1 to reduce the ending blank
 
 
 def main(argv):
@@ -77,7 +81,11 @@ def main(argv):
     fin = open(argv[1],"r")
     fout = open(argv[2],"w")        
     doer = City_locater_in_ORG(f, fin, fout)
-    doer.process()
+    doer.process()    
+    #Test cases
+    #print doer.isCityInside("The National Council For Culture")[0]+'kk'
+    #print doer.isCityInside("National University of Mexico")[0]+'kk'
+    #print doer.isCityInside("Sharon Lockhart")[0]+'kk'
     fout.close()
     fin.close()
     f.close()

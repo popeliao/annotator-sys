@@ -5,6 +5,8 @@
 # -*- coding: utf-8 -*-
 """
 ~~~ filter_out.py ~~~
+Standard argv[1] argv[2] interfaces
+
 This script takes an NER-tool annotated docs as input,
 it conducts post-process that filter all the words annotated as CITY 
 when it exactly appear in the filter list. 
@@ -21,7 +23,7 @@ import re
 import pickle
 
 class Filter(object):
-    def __init__(self,filterListPickle, fin, fout, silent = false):
+    def __init__(self,filterListPickle, fin, fout, silent = False):
         self.filterList = pickle.load(filterListPickle)
         self.fin = fin
         self.fout = fout
@@ -50,7 +52,7 @@ class Filter(object):
 
 
 def main(argv):
-    f = open("filter.pickle",'r') 	
+    f = open("filter_out.pickle",'r') 	
     #filter.pickle is the pickle docs that store the filterList
     fin = open(argv[1],"r")
     fout = open(argv[2],"w")        
