@@ -30,13 +30,19 @@ class Filter(object):
         self.fout = fout
         self.silent = silent #indicating whether will output a doc
 
+    def readIn(self, s):
+        if not self.silent:
+            self.context = self.fin.read()  
+        else:
+            self.context = s
+
     def filter(self):
         #filter the input fin based on filterList
-        context = self.fin.read()	#use a sentinel for convenience	
+        #use a sentinel for convenience         
         p = re.compile(r'<NE:CITY.*?>.*?</NE:CITY>')
         pmatch = re.compile(r'<NE:CITY.*?>(.*?)</NE:CITY>')
-        tagList = p.findall(context)
-        elseList = p.split(context)
+        tagList = p.findall(self.context)
+        elseList = p.split(self.context)
         result = ''
         for i in range(len(tagList)):                        
             result += elseList[i]
@@ -58,6 +64,7 @@ def main(argv):
     fin = open(argv[1],"r")
     fout = open(argv[2],"w")        
     doer = Filter(f, fin, fout)
+    doer.readIn(None)
     doer.filter()    
     fout.close()
     fin.close()

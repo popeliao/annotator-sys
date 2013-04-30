@@ -27,13 +27,18 @@ class City_locater_in_ORG(object):
         self.fout = fout
         self.silent = silent #indicating whether will output a doc
 
+    def readIn(self, s):
+        if not self.silent:
+            self.context = self.fin.read()  
+        else:
+            self.context = s    
+
     def process(self):
-        #filter the input fin based on filterList
-        context = self.fin.read()	#use a sentinel for convenience	
+        #filter the input fin based on filterList        
         p = re.compile(r'<NE:ORG.*?>.*?</NE:ORG>')
         pmatch = re.compile(r'<NE:ORG.*?>(.*?)</NE:ORG>')
-        tagList = p.findall(context)
-        elseList = p.split(context)
+        tagList = p.findall(self.context)
+        elseList = p.split(self.context)
         result = ''
         for i in range(len(tagList)):                        
             result += elseList[i]
@@ -79,6 +84,7 @@ def main(argv):
     fin = open(argv[1],"r")
     fout = open(argv[2],"w")        
     doer = City_locater_in_ORG(f, fin, fout)
+    doer.readIn(None)
     doer.process()    
     #Test cases
     #print doer.isCityInside("The National Council For Culture")[0]+'kk'
