@@ -4,13 +4,13 @@
 
 # -*- coding: utf-8 -*-
 """
-~~~ filter_out.py ~~~
+~~~ word_filter_out.py ~~~
 Standard argv[1]->argv[2] interfaces
-Depedency: a pickle file named filter_out.pickle
+Depedency: a pickle file named word_filter_out.pickle
 
 This script takes an NER-tool annotated docs as input,
 it conducts post-process that filter all the words annotated as CITY 
-when it exactly appear in the filter list. 
+when part of the word appears in the filter list. 
 
 The eventual output is a post-processed doc
 
@@ -23,6 +23,21 @@ import sys
 import re
 import pickle
 
+def compact_string_list(words, begin, end):
+    s = ''
+    for item in words[begin:end]:
+        s += item + ' '
+    return s[:-1]
+
+def all_sub(s):
+    words = s.split()
+    k = len(words)
+    result = []
+    for start in range(k):
+        for lent in range(k-start):
+            result.append(compact_string_list(words, start, start+lent+1))
+    return result
+
 class Filter(object):
     def __init__(self,filterListPickle, fin, fout, silent = False):
         self.filterList = pickle.load(filterListPickle)
@@ -32,7 +47,7 @@ class Filter(object):
 
     def filter(self):
         #filter the input fin based on filterList
-        context = self.fin.read()	#use a sentinel for convenience	
+        context = self.fin.read()   #use a sentinel for convenience 
         p = re.compile(r'<NE:CITY.*?>.*?</NE:CITY>')
         pmatch = re.compile(r'<NE:CITY.*?>(.*?)</NE:CITY>')
         tagList = p.findall(context)
@@ -41,10 +56,10 @@ class Filter(object):
         for i in range(len(tagList)):                        
             result += elseList[i]
             m = pmatch.match(tagList[i])
-            if not m.group(1).lower() in self.filterList:
-                result += tagList[i]  
+            if any(item.lower() in self.filterList for item in all_sub(m.group(1))):
+                result += m.group(1)                
             else:
-                result += m.group(1)
+                result += tagList[i] 
         if len(tagList) < len(elseList):
             result += elseList[-1]
         if not self.silent:
@@ -53,7 +68,7 @@ class Filter(object):
 
 
 def main(argv):
-    f = open("filter_out.pickle",'r') 	
+    f = open("word_filter_out.pickle",'r')   
     #filter.pickle is the pickle docs that store the filterList
     fin = open(argv[1],"r")
     fout = open(argv[2],"w")        

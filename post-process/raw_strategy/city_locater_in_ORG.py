@@ -6,17 +6,15 @@
 """
 ~~~ city_locater_in_ORG.py ~~~
 Standard arg[1] -> arg[2] interface
+Dependency: a pickle file named city_name.pickle
+
 This script takes an NER-tool annotated docs as input,
-
 it conducts post-process that locate all city name inside ORG annotations, 
-and mark it as CITY
-
-The eventual output is a post-processed doc
+and mark it as CITY. The eventual output is a post-processed doc
 
 by Ruizhi 
 April 2013 
 """
-
 
 import sys
 import re
