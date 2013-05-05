@@ -26,7 +26,6 @@ def type_iter():
         f1.close()
         f2.close()
 
-
 def printAllStat():
     #print all measure stat data based tp,tn,fp,fn
     global tp,tn,fp,fn, g_i
@@ -38,14 +37,12 @@ def printAllStat():
     fRecord.write("%10s %5f\n" %("recall:",re))
     fRecord.write("%10s %5f\n" %("F-measure:",F))
 
-
 #stat info
 #true postive, false postive, true negative, false negative
 tp=0
 fp=0
 tn=0
 fn=0
-
 
 COR = 0
 INC = 1
@@ -65,47 +62,6 @@ ansLOC = {}
 ansLOC[COR] = {}
 ansLOC[INC] = {}
 
-ansNER = {}
-ansNER["PERSON"] = {}
-ansNER["ORGANIZATION"] = {}
-
-docNum = 0
-#store stat data for the whole
-sumAnsLOC = {}
-sumAnsLOC[COR] = {}
-sumAnsLOC[INC] = {}
-
-sumAnsNER = {}
-sumAnsNER["PERSON"] = {}
-sumAnsNER["ORGANIZATION"] = {}
-
-#init for the summary stat data; obsolete
-sumAnsLOC[COR][COR] = 0
-sumAnsLOC[COR][INC] = 0
-sumAnsLOC[COR][PAR] = 0
-sumAnsLOC[COR][MIS] = 0
-sumAnsLOC[COR][SUP] = 0
-
-sumAnsLOC[INC][COR] = 0
-sumAnsLOC[INC][INC] = 0
-sumAnsLOC[INC][PAR] = 0
-sumAnsLOC[INC][MIS] = 0
-sumAnsLOC[INC][SUP] = 0    
-
-sumAnsNER["PERSON"][COR] = 0
-sumAnsNER["PERSON"][INC] = 0
-sumAnsNER["PERSON"][PAR] = 0
-sumAnsNER["PERSON"][MIS] = 0
-sumAnsNER["PERSON"][SUP] = 0
-
-sumAnsNER["ORGANIZATION"][COR] = 0
-sumAnsNER["ORGANIZATION"][INC] = 0
-sumAnsNER["ORGANIZATION"][PAR] = 0
-sumAnsNER["ORGANIZATION"][MIS] = 0
-sumAnsNER["ORGANIZATION"][SUP] = 0
-
-
-
 def init():  
     global pos1,pos2,NERtype1,NERtype2,strRecorder1,strRecorder2
     global ansLOC,ansNER
@@ -115,72 +71,7 @@ def init():
     pos2 = []
     NERtype2 = []
     strRecorder2 = []
-
-    #first dim = COR or INC to indicate type tagging correctness
-    ansLOC[COR][COR] = 0
-    ansLOC[COR][INC] = 0
-    ansLOC[COR][PAR] = 0
-    ansLOC[COR][MIS] = 0
-    ansLOC[COR][SUP] = 0
-
-    ansLOC[INC][COR] = 0
-    ansLOC[INC][INC] = 0
-    ansLOC[INC][PAR] = 0
-    ansLOC[INC][MIS] = 0
-    ansLOC[INC][SUP] = 0    
-
-    ansNER["PERSON"][COR] = 0
-    ansNER["PERSON"][INC] = 0
-    ansNER["PERSON"][PAR] = 0
-    ansNER["PERSON"][MIS] = 0
-    ansNER["PERSON"][SUP] = 0
-
-    ansNER["ORGANIZATION"][COR] = 0
-    ansNER["ORGANIZATION"][INC] = 0
-    ansNER["ORGANIZATION"][PAR] = 0
-    ansNER["ORGANIZATION"][MIS] = 0
-    ansNER["ORGANIZATION"][SUP] = 0
-
     
-
-
-def printStat():#obsolete
-    fRecord.write("\nStat for LOCATION\n")
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("COR",ansLOC[COR][COR],ansLOC[COR][INC],ansLOC[COR][PAR],ansLOC[COR][MIS],ansLOC[COR][SUP]))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("INC",ansLOC[INC][COR],ansLOC[INC][INC],ansLOC[INC][PAR],"N\A","N\A"))
-    
-    fRecord.write("\nStat for LOCATION tagged as other NE\n")
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("PER",ansNER["PERSON"][COR],ansNER["PERSON"][INC],ansNER["PERSON"][PAR],ansNER["PERSON"][MIS],ansNER["PERSON"][SUP]))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("ORG",ansNER["ORGANIZATION"][COR],ansNER["ORGANIZATION"][INC],ansNER["ORGANIZATION"][PAR],ansNER["ORGANIZATION"][MIS],ansNER["ORGANIZATION"][SUP]))
-
-def sumRecord(): #obsolete
-#sum up the value to the summary
-    sumAnsLOC[COR][COR] = sumAnsLOC[COR][COR] + ansLOC[COR][COR]
-    sumAnsLOC[COR][INC] = sumAnsLOC[COR][INC] + ansLOC[COR][INC]
-    sumAnsLOC[COR][PAR] = sumAnsLOC[COR][PAR] + ansLOC[COR][PAR]
-    sumAnsLOC[COR][MIS] = sumAnsLOC[COR][MIS] + ansLOC[COR][MIS]
-    sumAnsLOC[COR][SUP] = sumAnsLOC[COR][SUP] + ansLOC[COR][SUP]
-
-    sumAnsLOC[INC][COR] = sumAnsLOC[INC][COR] + ansLOC[INC][COR]
-    sumAnsLOC[INC][INC] = sumAnsLOC[INC][INC] + ansLOC[INC][INC]
-    sumAnsLOC[INC][PAR] = sumAnsLOC[INC][PAR] + ansLOC[INC][PAR]
-    sumAnsLOC[INC][MIS] = sumAnsLOC[INC][MIS] + ansLOC[INC][MIS]
-    sumAnsLOC[INC][SUP] = sumAnsLOC[INC][SUP] + ansLOC[INC][SUP]
-
-    sumAnsNER["PERSON"][COR] = sumAnsNER["PERSON"][COR] + ansNER["PERSON"][COR]
-    sumAnsNER["PERSON"][INC] = sumAnsNER["PERSON"][INC] + ansNER["PERSON"][INC]
-    sumAnsNER["PERSON"][PAR] = sumAnsNER["PERSON"][PAR] + ansNER["PERSON"][PAR]
-    sumAnsNER["PERSON"][MIS] = sumAnsNER["PERSON"][MIS] + ansNER["PERSON"][MIS]
-    sumAnsNER["PERSON"][SUP] = sumAnsNER["PERSON"][SUP] + ansNER["PERSON"][SUP]
-
-    sumAnsNER["ORGANIZATION"][COR] = sumAnsNER["ORGANIZATION"][COR] + ansNER["ORGANIZATION"][COR]
-    sumAnsNER["ORGANIZATION"][INC] = sumAnsNER["ORGANIZATION"][INC] + ansNER["ORGANIZATION"][INC]
-    sumAnsNER["ORGANIZATION"][PAR] = sumAnsNER["ORGANIZATION"][PAR] + ansNER["ORGANIZATION"][PAR]
-    sumAnsNER["ORGANIZATION"][MIS] = sumAnsNER["ORGANIZATION"][MIS] + ansNER["ORGANIZATION"][MIS]
-    sumAnsNER["ORGANIZATION"][SUP] = sumAnsNER["ORGANIZATION"][SUP] + ansNER["ORGANIZATION"][SUP]
-
 def recordStat(ACT, typeFlag):
     #dynamically change the global value tp,tn,fp,fn based on record 
     #ACT(postion) and typeFlag(type), see about_measure for reference
@@ -216,29 +107,7 @@ def record(ACT, p, q):
     elif (ACT == SUP):
         fRecord.write("%10s%5s%50s%50s" %("SUP", typeFlag, strRecorder1[p], ""))    
     fRecord.write("\n")
-    recordStat(ACT, typeFlag)
-
-
-
-    ############################OLD CODE
-    #make stat for LOC
-    #if (ACT <> MIS and ACT <> SUP):
-    #    if (NERtype2[q]=="LOCATION" and NERtype1[p] == NERtype2[q]): #******
-    #        ansLOC[COR][ACT] = ansLOC[COR][ACT] + 1
-    #    elif (NERtype2[q]=="LOCATION" and NERtype1[p] <> NERtype2[q]): #*****
-    #        ansLOC[INC][ACT] = ansLOC[INC][ACT] + 1
-    #else:
-    #    if (ACT == MIS):
-    #        if (NERtype2[q]=="LOCATION"):
-    #            ansLOC[COR][MIS] = ansLOC[COR][MIS] + 1                        
-    #    if (ACT == SUP):
-    #        if (NERtype1[p]=="LOCATION"):
-    #            ansLOC[COR][SUP] = ansLOC[COR][SUP] + 1            
-
-    #make stat for all NE, i.e. those LOC tagged as other NE
-    #if (ACT <> MIS and ACT <> SUP):
-    #    if (p < len (NERtype1) and q < len (NERtype2) and NERtype2[q]=="LOCATION" and NERtype1[p]<>"LOCATION"): #*****
-    #        ansNER[NERtype1[p]][ACT] = ansNER[NERtype1[p]][ACT] + 1            
+    recordStat(ACT, typeFlag)          
 
 def compare():
     p = 0
@@ -274,7 +143,6 @@ def compare():
     while (q < len(pos2)):
         record(MIS, p, q)
         q = q + 1
-
 
 def extractDoc(s, pos, NERtype, strRecorder):
     global g_i	  #we're dealing with g_i th ner type
@@ -319,19 +187,6 @@ def extractDoc(s, pos, NERtype, strRecorder):
     #print strRecorder
     #print '*****************'
 
-def printSum():# obsolete
-    
-    fRecord.write("\n\n\n***************************\nStat for all doc\n**************************\n")
-    fRecord.write("\nStat for LOCATION\n")
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("COR",sumAnsLOC[COR][COR],sumAnsLOC[COR][INC],sumAnsLOC[COR][PAR],sumAnsLOC[COR][MIS],sumAnsLOC[COR][SUP]))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("INC",sumAnsLOC[INC][COR],sumAnsLOC[INC][INC],sumAnsLOC[INC][PAR],"N\A","N\A"))
-    
-    fRecord.write("\nStat for LOCATION tagged as other NE\n")
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("TYPE/POS","COR","INC","PAR","MIS","SUP"))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("PER",sumAnsNER["PERSON"][COR],sumAnsNER["PERSON"][INC],sumAnsNER["PERSON"][PAR],sumAnsNER["PERSON"][MIS],sumAnsNER["PERSON"][SUP]))
-    fRecord.write("%10s%5s%5s%5s%5s%5s\n" %("ORG",sumAnsNER["ORGANIZATION"][COR],sumAnsNER["ORGANIZATION"][INC],sumAnsNER["ORGANIZATION"][PAR],sumAnsNER["ORGANIZATION"][MIS],sumAnsNER["ORGANIZATION"][SUP]))
-
 def dealDocly(f1,f2):
     c1 = f1.readline()
     c2 = f2.readline()
@@ -369,6 +224,5 @@ def dealDocly(f1,f2):
             c2 = f2.readline()   
         
 #############main##################
-
 type_iter()
 fRecord.close()
