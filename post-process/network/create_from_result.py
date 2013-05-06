@@ -26,8 +26,8 @@ class CityGraph(object):
     def init(self):
     #build city count list on a doc base
         self.docNum = 0
-        s, fid = self.extractDoc()
         self.doc_dict = {}
+        s, fid = self.extractDoc()        
         while s != "":                        
             self.doc_dict[fid] = {}
             self.update_dict(s, fid)
@@ -47,11 +47,12 @@ class CityGraph(object):
 
     def out_city_count_list(self):
     #write the city count list to output file
-        self.f1.write("%20s %20s %5s\n"  %("CITY NAME", "DOC", "COUNT"))         
-        for doc_id in self.doc_dict: 
-            if self.doc_dict[doc_id]:
-                for each_city in self.doc_dict[doc_id]:
-                    self.f1.write("%20s %20s %5.0f\n" %(each_city, doc_id, self.doc_dict[doc_id][each_city]))              
+        if not self.silent:
+            self.f1.write("%20s %20s %5s\n"  %("CITY NAME", "DOC", "COUNT"))         
+            for doc_id in self.doc_dict: 
+                if self.doc_dict[doc_id]:
+                    for each_city in self.doc_dict[doc_id]:
+                        self.f1.write("%20s %20s %5.0f\n" %(each_city, doc_id, self.doc_dict[doc_id][each_city]))              
 
     def extractDoc(self):
     #extract doc string from input file docly
@@ -69,7 +70,6 @@ class CityGraph(object):
             self.docNum += 1
         return s, fid
             
-
 def main(argv):
     f0 = open(argv[1], "r")
     f = open(argv[2], "w")
