@@ -33,10 +33,10 @@ class CityGraph(object):
         self.doc_dict = {}
         s, fid = self.extractDoc()        
         while s != "":     
-            if fid:                   
+            if fid != "":                                   
                 self.doc_dict[fid] = {}
                 self.update_dict(s, fid)
-                s, fid = self.extractDoc()   
+            s, fid = self.extractDoc()   
 
     def update_dict(self, docstr, fid):
     #build the city count list for each doc
@@ -69,12 +69,15 @@ class CityGraph(object):
         if c:        
             c = self.f0.readline()
             url = c.split()[0][:-1]
-            if self.has_key(url):
+            
+            if self.id_dict.has_key(url):                
                 fid = self.id_dict[url]    # all http url is directly followed <doc> and has a extra ':' at the end
             while not "</doc>" in c:
                 s += c
                 c = self.f0.readline()        
             self.docNum += 1
+            if self.docNum % 1000 == 0:
+                print self.docNum
         return s, fid
             
 def main(argv):

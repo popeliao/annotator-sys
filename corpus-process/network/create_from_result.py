@@ -44,10 +44,18 @@ class CityGraph(object):
         list = p.findall(docstr)        
         for items in list:
             name = items[items.find('>')+1:items.find('<',items.find('<')+1)]
+            name = self.unify(name)
             if self.doc_dict[fid].has_key(name):
                 self.doc_dict[fid][name] += 1
             else:
                 self.doc_dict[fid][name] = 1
+
+    def unify(self, city):
+    #unify a city name into a standard way
+        tmp = city.lower().replace(".","").replace(",","")
+        tmp = ' '.join(tmp.split())
+        return tmp
+
 
 
     def out_city_count_list(self):
