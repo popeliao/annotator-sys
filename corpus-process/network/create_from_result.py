@@ -56,7 +56,14 @@ class CityGraph(object):
         tmp = ' '.join(tmp.split())
         return tmp
 
-
+    def out_city_count_list_comma(self):
+        #write the city count list to output file with tab as separator
+        if not self.silent:
+            #self.f1.write("%20s %20s %5s\n"  %("CITY NAME", "DOC", "COUNT"))         
+            for doc_id in self.doc_dict: 
+                if self.doc_dict[doc_id]:
+                    for each_city in self.doc_dict[doc_id]:
+                        self.f1.write("%s,%s,%.0f\n" %(each_city, doc_id, self.doc_dict[doc_id][each_city]))              
 
     def out_city_count_list(self):
     #write the city count list to output file
@@ -93,7 +100,8 @@ def main(argv):
     f = open(argv[2], "w")
     doer = CityGraph([f0,f])
     doer.init()
-    doer.out_city_count_list()
+    #doer.out_city_count_list()
+    doer.out_city_count_list_comma()
     f0.close()
     f.close()
 
