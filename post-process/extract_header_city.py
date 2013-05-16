@@ -14,7 +14,7 @@ April 2013
 
 import os
 import sys
-from raw_strategy import city_locater_in_ORG, filter_out, word_filter_out
+from raw_strategy import city_locater_in_ORG, filter_out, word_filter_out, city_locater_in_header
 
 class Word_Filter(object):
     def __init__(self,fin, fout, silent = False):        
@@ -41,6 +41,8 @@ class Word_Filter(object):
         s3.readIn(things) 
         things = s3.filter()    
 
+        dat_city_list.close()
+        dat_city_list = open("raw_strategy/city_name.pickle",'r') 
         s4 = city_locater_in_header.City_locater_in_header(dat_city_list, None, None, True)
         s4.readIn(things)
         things = s4.process()  
